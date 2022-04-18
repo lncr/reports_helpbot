@@ -151,10 +151,13 @@ def getMessage():
 	bot.process_new_updates([types.Update.de_json(request.stream.read().decode('utf-8'))])
 	return "!", 200
 
+
 @server.route('/')
 def webhook():
 	bot.remove_webhook()
+	print('11111111111111111111111111111111111')
 	bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
+	print('22222222222222222222222222222222222')
 	return "!", 200
 
 if __name__ == '__main__':
