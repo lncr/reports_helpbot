@@ -11,6 +11,9 @@ TOKEN = constants.TOKEN
 bot = telebot.TeleBot(TOKEN, parse_mode='HTML')
 server = Flask(__name__)
 
+bot.remove_webhook()
+bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
+
 
 main_menu = types.InlineKeyboardButton(text='Вернуться в главное меню', callback_data='main_menu')
 langs = types.InlineKeyboardButton(text='Языки программирования ', callback_data='languages')
@@ -58,7 +61,7 @@ def write_to_xlsx(user):
 	max_row = ws.max_row
 	for i in range(2, ws.max_row+1):
 		if ws.cell(row=i, column=1).value == user.telegram_id:
-			ws[f'A{i}'] = Noneuser.telegram_id
+			ws[f'A{i}'] = user.telegram_id
 			ws[f'B{i}'] = user.telegram_username
 			ws[f'C{i}'] = user.name
 			ws[f'D{i}'] = user.credential
@@ -146,19 +149,14 @@ def answer(call):
 
 	bot.answer_callback_query(call.id)
 
+
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
 	bot.process_new_updates([types.Update.de_json(request.stream.read().decode('utf-8'))])
 	return "!", 200
 
 
-@server.route('/')
-def webhook():
-	bot.remove_webhook()
-	print('11111111111111111111111111111111111')
-	bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
-	print('22222222222222222222222222222222222')
-	return "!", 200
-
 if __name__ == '__main__':
 	server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
+bot.infinity_polling()
