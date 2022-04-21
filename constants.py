@@ -1,4 +1,4 @@
-TOKEN = '1322836847:AAEnnZiqRsOzbEFzR14bLdqYIlFmRCQ4hvg'
+TOKEN = '5398497193:AAGIb9fpRMo5yN54moUoODS2WNNlONfktzk'
 WELCOME_MSG = '''
 <b>Привет! Это проект “5 IT лицеев в регионах КР”.</b>
 Наши филиалы открыты в 8 городах Кыргызстана:
