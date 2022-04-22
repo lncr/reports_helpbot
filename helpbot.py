@@ -16,7 +16,7 @@ bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
 
 
 main_menu = types.InlineKeyboardButton(text='Башкы  меню', callback_data='main_menu')
-langs = types.InlineKeyboardButton(text='Языки программирования ', callback_data='languages')
+langs = types.InlineKeyboardButton(text='Кандай программалоо тилдерин үйрөнсөм болот?', callback_data='languages')
 ages = types.InlineKeyboardButton(text='Жашы боюнча чектөөлөр барбы?', callback_data='ages')
 ort = types.InlineKeyboardButton(text='Тапшыруу үчүн ЖРТ керекпи?', callback_data='ort')
 wanna_langs = types.InlineKeyboardButton(text='Кандай программалоо тилдерин үйрөнсөм болот?', callback_data='languages')
