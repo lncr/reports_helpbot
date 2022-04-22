@@ -15,28 +15,30 @@ bot.remove_webhook()
 bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
 
 
-main_menu = types.InlineKeyboardButton(text='Вернуться в главное меню', callback_data='main_menu')
+main_menu = types.InlineKeyboardButton(text='Башкы  меню', callback_data='main_menu')
 langs = types.InlineKeyboardButton(text='Языки программирования ', callback_data='languages')
-ages = types.InlineKeyboardButton(text='Ограничения по возрасту', callback_data='ages')
-ort = types.InlineKeyboardButton(text='Нужен ли ОРТ?', callback_data='ort')
-wanna_langs = types.InlineKeyboardButton(text='Каким языкам программирования смогу научиться?', callback_data='languages')
+ages = types.InlineKeyboardButton(text='Жашы боюнча чектөөлөр барбы?', callback_data='ages')
+ort = types.InlineKeyboardButton(text='Тапшыруу үчүн ЖРТ керекпи?', callback_data='ort')
+wanna_langs = types.InlineKeyboardButton(text='Кандай программалоо тилдерин үйрөнсөм болот?', callback_data='languages')
+contacts = types.InlineKeyboardButton(text='Байланыш номерлер', callback_data='contacts')
 python = types.InlineKeyboardButton(text='Python', callback_data='python')
 javascript = types.InlineKeyboardButton(text='JavaScript', callback_data='javascript')
-education_program = types.InlineKeyboardButton(text='Программа обучения', callback_data='education_program')
-education_duration = types.InlineKeyboardButton(text='Длительность обучения', callback_data='education_duration')
-prev_menu = types.InlineKeyboardButton(text='Назад', callback_data='previous')
-contract_group = types.InlineKeyboardButton(text='Контрактные групы', callback_data='contract_group')
-budget_group = types.InlineKeyboardButton(text='Бюджетные группы', callback_data='budget_group')
-documents = types.InlineKeyboardButton(text='Документы  для поступления', callback_data='documents')
-laptop = types.InlineKeyboardButton(text='Характеристики ноутбука', callback_data='laptop')
-dorm = types.InlineKeyboardButton(text='Общежитие', callback_data='dorm')
+education_program = types.InlineKeyboardButton(text='Окутуунун программасы', callback_data='education_program')
+education_duration = types.InlineKeyboardButton(text='Окутуунун мөөнөтү', callback_data='education_duration')
+prev_menu = types.InlineKeyboardButton(text='Артка кайтуу', callback_data='previous')
+contract_group = types.InlineKeyboardButton(text='Келишим топтору', callback_data='contract_group')
+budget_group = types.InlineKeyboardButton(text='Бюджеттик топтор', callback_data='budget_group')
+documents = types.InlineKeyboardButton(text='Керектүү документтер', callback_data='documents')
+laptop = types.InlineKeyboardButton(text='Кандай ноутбук талап кылынат?', callback_data='laptop')
+dorm = types.InlineKeyboardButton(text='Лицейлерде жатакана барбы?', callback_data='dorm')
 
 
 CONTENT = {
+	'contacts': (constants.CONTACTS, [[main_menu]]),
 	'languages': (constants.LANGUAGES, [[python], [javascript], [main_menu]]),
 	'ages': (constants.AGES, [[python], [javascript], [main_menu]]),
 	'ort': (constants.ORT, [[python], [javascript], [main_menu]]),
-	'main_menu': ('Что тебя интересует?', [[langs], [ages], [ort]]),
+	'main_menu': ('Баштайлы! Бир суроону тандаңыз', [[langs], [ages], [ort], [contacts]]),
 	'javascript': (constants.AGE_BASED, create_lang_inlines('javascript')),
 	'python': (constants.AGE_BASED, create_lang_inlines('python')),
 	'class_9_javascript': (constants.CLASS_9_JAVASCRIPT, [[education_program], [education_duration], [main_menu]]),
@@ -87,7 +89,7 @@ def process_name_step(message):
 	name = message.text
 	user = User(name, message.from_user.username, message.from_user.id)
 	user_dict[chat_id] = user
-	msg = bot.reply_to(message, 'Оставь свой номер или почту, отправим уведомление о старте набора в группы')
+	msg = bot.reply_to(message, 'Номериңизди же почтаңызды калтырсаңыз болот, лицейлерге кабыл алуу башталганда, билдирүүнү жөнөтөбүз')
 	bot.register_next_step_handler(msg, process_credential_step)
 
 
