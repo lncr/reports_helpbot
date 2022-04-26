@@ -37,6 +37,41 @@ def write_to_xlsx(user):
 	wb.save(filename='stats.xlsx')
 
 
+buttons = {
+	'ru': {
+		'main_menu': 'Главное меню',
+		'langs': 'Языки программирования',
+		'ages': 'Ограничения по возрасту',
+		'wanna_langs': 'Языки программирования',
+		'ort': 'Нужен ли ОРТ?',
+		'contacts': 'Контакты лицеев',
+		'education_program': 'Программа обучения',
+		'education_duration': 'Длительность обучения',
+		'prev_menu': 'Назад',
+		'contract_group': 'Контрактные группы',
+		'budget_group': 'Бюджетные группы',
+		'documents': 'Документы',
+		'laptop': 'Характеристики ноутбука',
+		'dorm': 'Общежитие'
+	},
+	'kg': {
+		'main_menu': 'Башкы  меню',
+		'langs': 'Кандай программалоо тилдерин үйрөнсөм болот?',
+		'ages': 'Жашы боюнча чектөөлөр барбы?',
+		'wanna_langs': 'Кандай программалоо тилдерин үйрөнсөм болот?',
+		'ort': 'Тапшыруу үчүн ЖРТ керекпи?',
+		'contacts': 'Байланыш номерлер',
+		'education_program': 'Окутуунун программасы',
+		'education_duration': 'Окутуунун мөөнөтү',
+		'prev_menu': 'Артка кайтуу',
+		'contract_group': 'Келишим топтору',
+		'budget_group': 'Бюджеттик топтор',
+		'documents': 'Керектүү документтер',
+		'laptop': 'Кандай ноутбук талап кылынат?',
+		'dorm': 'Лицейлерде жатакана барбы?'
+	}
+}
+
 def create_content(language=None):
 	language = 'kg' if not language else language
 	
@@ -93,7 +128,7 @@ class User:
 def process_welcome_step(message):
 	lang = lang_dict.get(message.chat.id)
 	if lang == 'ru':
-		from constants_ru import WELCOME_MSG:
+		from constants_ru import WELCOME_MSG
 		reply = WELCOME_MSG
 	else:
 		reply = constants.WELCOME_MSG
@@ -132,41 +167,6 @@ def send_welcome(message):
 	ru = types.InlineKeyboardButton(text='Русский', callback_data='set_ru_lng')
 	reply_markup = types.InlineKeyboardMarkup([[kg], [ru]])
 	bot.reply_to(message, constants.INITIAL_MSG, reply_markup=reply_markup)
-
-buttons = {
-	'ru': {
-		'main_menu': 'Главное меню',
-		'langs': 'Языки программирования',
-		'ages': 'Ограничения по возрасту',
-		'wanna_langs': 'Языки программирования',
-		'ort': 'Нужен ли ОРТ?',
-		'contacts': 'Контакты лицеев',
-		'education_program': 'Программа обучения',
-		'education_duration': 'Длительность обучения',
-		'prev_menu': 'Назад',
-		'contract_group': 'Контрактные группы',
-		'budget_group': 'Бюджетные группы',
-		'documents': 'Документы',
-		'laptop': 'Характеристики ноутбука',
-		'dorm': 'Общежитие'
-	},
-	'kg': {
-		'main_menu': 'Башкы  меню',
-		'langs': 'Кандай программалоо тилдерин үйрөнсөм болот?',
-		'ages': 'Жашы боюнча чектөөлөр барбы?',
-		'wanna_langs': 'Кандай программалоо тилдерин үйрөнсөм болот?',
-		'ort': 'Тапшыруу үчүн ЖРТ керекпи?',
-		'contacts': 'Байланыш номерлер',
-		'education_program': 'Окутуунун программасы',
-		'education_duration': 'Окутуунун мөөнөтү',
-		'prev_menu': 'Артка кайтуу',
-		'contract_group': 'Келишим топтору',
-		'budget_group': 'Бюджеттик топтор',
-		'documents': 'Керектүү документтер',
-		'laptop': 'Кандай ноутбук талап кылынат?',
-		'dorm': 'Лицейлерде жатакана барбы?'
-	}
-}
 
 
 @bot.message_handler(commands=['loadstats'])
