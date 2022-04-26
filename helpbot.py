@@ -126,6 +126,7 @@ class User:
 		self.credential = None
 
 def process_welcome_step(message):
+	print(message)
 	lang = lang_dict.get(message.chat.id)
 	if lang == 'ru':
 		from constants_ru import WELCOME_MSG
@@ -202,6 +203,7 @@ def answer(call):
 		chat_id = call.message.chat.id
 		lang_dict[chat_id] = call.data[4:6]
 		msg = bot.reply_to(call.message, reply)
+		print('11111111111111111111111111111111111111111111111111111111111111111')
 		bot.register_next_step_handler(msg, process_welcome_step)
 
 	else:
