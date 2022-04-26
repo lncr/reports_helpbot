@@ -167,7 +167,7 @@ def send_welcome(message):
 	kg = types.InlineKeyboardButton(text='Кыргызча', callback_data='set_kg_lng')
 	ru = types.InlineKeyboardButton(text='Русский', callback_data='set_ru_lng')
 	reply_markup = types.InlineKeyboardMarkup([[kg], [ru]])
-	bot.reply_to(message, constants.INITIAL_MSG, reply_markup=reply_markup)
+	bot.send_message(message.chat.id, constants.INITIAL_MSG, reply_markup=reply_markup)
 
 
 @bot.message_handler(commands=['loadstats'])
