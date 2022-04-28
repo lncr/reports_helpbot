@@ -10,9 +10,9 @@ from utils import create_lang_inlines
 TOKEN = constants.TOKEN
 bot = telebot.TeleBot(TOKEN, parse_mode='HTML')
 server = Flask(__name__)
-history = []
 user_dict = {}
 lang_dict = {}
+history_dict = {}
 
 bot.remove_webhook()
 bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
@@ -171,7 +171,12 @@ def load_stats(message):
 @bot.callback_query_handler(func=lambda call:True)
 def answer(call):
 
-	global history
+	global history_dict
+
+	history = history_dict.get(call.message.chat.id)
+	if not history:
+		history_dict[call.message.chat.id] = []
+
 	CONTENT = create_content(lang_dict.get(call.message.chat.id))
 
 	if call.data == 'previous':
@@ -205,9 +210,10 @@ def answer(call):
 		msg = bot.reply_to(call.message, reply)
 		bot.register_next_step_handler(msg, process_name_step)
 
-	elif call.message.text == '/start':
+	elif call.message.text == '/restart':
 		kg = types.InlineKeyboardButton(text='Кыргызча', callback_data='set_kg_lng')
 		ru = types.InlineKeyboardButton(text='Русский', callback_data='set_ru_lng')
+		history = []
 		reply_markup = types.InlineKeyboardMarkup([[kg], [ru]])
 		bot.send_message(call.message.chat.id, constants.INITIAL_MSG, reply_markup=reply_markup)
 
@@ -225,6 +231,7 @@ def answer(call):
 		history.append(call.data)
 		bot.send_message(call.message.chat.id, text, reply_markup=reply_markup)
 
+	history_dict[call.message.chat.id] = history
 	bot.answer_callback_query(call.id)
 
 
