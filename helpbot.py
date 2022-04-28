@@ -103,8 +103,8 @@ def create_content(language=None):
 		'main_menu': (main_txt, [[langs], [ages], [ort], [contacts]]),
 		'contacts': (constants.CONTACTS, [[main_menu]]),
 		'languages': (constants.LANGUAGES, [[python], [javascript], [main_menu]]),
-		'ages': (constants.AGES, [[python], [javascript], [main_menu]]),
-		'ort': (constants.ORT, [[python], [javascript], [main_menu]]),
+		'ages': (constants.AGES, [[main_menu]]),
+		'ort': (constants.ORT, [[main_menu]]),
 		'javascript': (constants.AGE_BASED, create_lang_inlines('javascript')),
 		'python': (constants.AGE_BASED, create_lang_inlines('python')),
 		'class_9_javascript': (constants.CLASS_9_JAVASCRIPT, [[education_program], [education_duration], [main_menu]]),
@@ -204,6 +204,12 @@ def answer(call):
 			reply = constants.WELCOME_MSG
 		msg = bot.reply_to(call.message, reply)
 		bot.register_next_step_handler(msg, process_name_step)
+
+	elif call.message.text == '/start':
+		kg = types.InlineKeyboardButton(text='Кыргызча', callback_data='set_kg_lng')
+		ru = types.InlineKeyboardButton(text='Русский', callback_data='set_ru_lng')
+		reply_markup = types.InlineKeyboardMarkup([[kg], [ru]])
+		bot.send_message(call.message.chat.id, constants.INITIAL_MSG, reply_markup=reply_markup)
 
 	else:
 		content = CONTENT[call.data]
