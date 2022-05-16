@@ -41,6 +41,7 @@ def write_to_xlsx(user):
 buttons = {
 	'ru': {
 		'main_menu': 'Главное меню',
+		'glossary': 'Показать все вопросы',
 		'langs': 'Языки программирования',
 		'ages': 'Ограничения по возрасту',
 		'wanna_langs': 'Языки программирования',
@@ -57,6 +58,7 @@ buttons = {
 	},
 	'kg': {
 		'main_menu': 'Башкы  меню',
+		'glossary': 'Бардык суроолорду көрсөтүү',
 		'langs': 'Кандай программалоо тилдерин үйрөнсөм болот?',
 		'ages': 'Жашы боюнча чектөөлөр барбы?',
 		'wanna_langs': 'Кандай программалоо тилдерин үйрөнсөм болот?',
@@ -77,6 +79,7 @@ def create_content(language=None):
 	language = 'kg' if not language else language
 	
 	main_menu = types.InlineKeyboardButton(text=buttons[language]['main_menu'], callback_data='main_menu')
+	glossary = types.InlineKeyboardButton(text=buttons[language]['glossary'], callback_data='glossary')
 	langs = types.InlineKeyboardButton(text=buttons[language]['langs'], callback_data='languages')
 	ages = types.InlineKeyboardButton(text=buttons[language]['ages'], callback_data='ages')
 	ort = types.InlineKeyboardButton(text=buttons[language]['ort'], callback_data='ort')
@@ -94,6 +97,7 @@ def create_content(language=None):
 	dorm = types.InlineKeyboardButton(text=buttons[language]['dorm'], callback_data='dorm')
 
 	main_txt = 'Баштайлы! Бир суроону тандаңыз' if language == 'kg' else 'Начнем! Что тебя интересует:'
+	glossary_txt = 'Эмне жөнүндө маалымат издеп жатасыз?' if language == 'kg' else 'О чём вы хотите узнать?'
 
 	if language == 'ru':
 		used_constants = constants_ru
@@ -101,13 +105,15 @@ def create_content(language=None):
 		used_constants = constants
 
 	CONTENT = {
-		'main_menu': (main_txt, [[langs], [ages], [ort], [contacts]]),
+		'main_menu': (main_txt, [[langs], [ages], [ort], [contacts], [glossary]]),
+		'glossary': (glossary_txt, [[python], [javascript], [education_program], [education_duration], 
+						  			[contract_group], [budget_group], [documents], [laptop], [dorm], ]),
 		'contacts': (used_constants.CONTACTS, [[main_menu]]),
 		'languages': (used_constants.LANGUAGES, [[python], [javascript], [main_menu]]),
 		'ages': (used_constants.AGES, [[main_menu]]),
 		'ort': (used_constants.ORT, [[main_menu]]),
-		'javascript': (used_constants.AGE_BASED, create_lang_inlines('javascript')),
-		'python': (used_constants.AGE_BASED, create_lang_inlines('python')),
+		'javascript': (used_constants.AGE_BASED, create_lang_inlines('javascript', language)),
+		'python': (used_constants.AGE_BASED, create_lang_inlines('python', language)),
 		'class_9_javascript': (used_constants.CLASS_9_JAVASCRIPT, [[education_program], [education_duration], [main_menu]]),
 		'class_11_javascript': (used_constants.CLASS_11_JAVASCRIPT, [[education_program], [education_duration], [main_menu]]),
 		'class_9_python': (used_constants.CLASS_9_PYTHON, [[education_program], [education_duration], [main_menu]]),
@@ -194,11 +200,11 @@ def answer(call):
 		reply_markup = types.InlineKeyboardMarkup(keyboards)
 		bot.send_message(call.message.chat.id, content[0], reply_markup=reply_markup)
 
-	elif call.data == 'main_menu':
+	elif call.data == 'main_menu' or call.data == 'glossary':
 		history = []
-		reply_markup = types.InlineKeyboardMarkup(CONTENT['main_menu'][1])
+		reply_markup = types.InlineKeyboardMarkup(CONTENT[call.data][1])
 		
-		bot.send_message(call.message.chat.id, CONTENT['main_menu'][0], reply_markup=reply_markup)
+		bot.send_message(call.message.chat.id, CONTENT[call.data][0], reply_markup=reply_markup)
 	
 	elif call.data == 'set_kg_lng' or call.data == 'set_ru_lng':
 		chat_id = call.message.chat.id
