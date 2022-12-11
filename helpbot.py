@@ -16,7 +16,7 @@ lang_dict = {}
 history_dict = {}
 
 bot.remove_webhook()
-bot.set_webhook(url='https://sheltered-plains-90885.herokuapp.com/'+TOKEN)
+bot.set_webhook(url='https://ec2-18-237-20-31.us-west-2.compute.amazonaws.com/'+TOKEN)
 
 
 def write_to_xlsx(user):
