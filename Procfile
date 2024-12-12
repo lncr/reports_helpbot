@@ -1,1 +1,1 @@
-web: python3 helpbot.py
+web: uvicorn main:app --host 0.0.0.0 --port 5000
